@@ -22,6 +22,7 @@ public class DriveTrainSubSystem extends SubsystemBase {
   private final WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(DriverTrainConstants.RIGHT_MOTOR_ONE_ID);
   private final WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(DriverTrainConstants.RIGHT_MOTOR_TWO_ID);
   public static final WPI_TalonSRX extraMot = new WPI_TalonSRX(DriverTrainConstants.mot0);
+  
   private final AHRS navX = new AHRS(SerialPort.Port.kUSB);
 
   private final SpeedControllerGroup leftMotor = new SpeedControllerGroup(leftMotor1, leftMotor2);

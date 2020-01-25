@@ -10,14 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import frc.robot.commands.AlphaDriveStraightCommand;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.XboxDive;
 import frc.robot.subsystems.DriveTrainSubSystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.OIConstants;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import frc.robot.Constants.OIConstants;
 /**
@@ -31,7 +30,8 @@ public class RobotContainer {
   private final Joystick driveJoystick = new Joystick(frc.robot.Constants.OIConstants.DRIVE_JOYSTICK_PORT);
   private final JoystickButton m_throttle = new JoystickButton(driveJoystick, frc.robot.Constants.OIConstants.driveJoystickButtonID);
   private final JoystickButton ToggleThrottle = new JoystickButton(driveJoystick, frc.robot.Constants.OIConstants.toggleButtonThrottle);
-//  private final Joystick rotateJoystick = new Joystick(frc.robot.Constants.OIConstants.ROTATE_JOYSTICK_PORT);
+  private final JoystickButton driveStraightButton = new JoystickButton(driveJoystick, frc.robot.Constants.OIConstants.driveStraightButtonID);
+  //  private final Joystick rotateJoystick = new Joystick(frc.robot.Constants.OIConstants.ROTATE_JOYSTICK_PORT);
 
 
 private final DriveTrainSubSystem driveTrainSubSystem = DriveTrainSubSystem.getInstance();
@@ -39,9 +39,10 @@ private final DriveTrainSubSystem driveTrainSubSystem = DriveTrainSubSystem.getI
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    DriveTrainSubSystem.getInstance().setDefaultCommand(new XboxDive(driveTrainSubSystem, driveJoystick, m_throttle, ToggleThrottle));
+    DriveTrainSubSystem.getInstance().setDefaultCommand(new AlphaDriveStraightCommand(driveTrainSubSystem, driveJoystick, driveStraightButton));
     // Configure the button bindings
     configureButtonBindings();
+
   }
 
   /**

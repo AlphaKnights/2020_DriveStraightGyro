@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveTrainSubSystem;
@@ -103,7 +102,7 @@ public class XboxDive extends CommandBase {
   }
 
 
-    m_Drivetrain.alphaDriveArcade(xboxDriveConstants.throttle, Math.sqrt(Math.abs(xboxDriveConstants.rotation)) * xboxDriveConstants.rotationMultiplier - xboxDriveConstants.navXCorrection);
+    m_Drivetrain.alphaDriveArcade(xboxDriveConstants.throttle, Math.sqrt(Math.abs(xboxDriveConstants.rotation)) * xboxDriveConstants.rotationMultiplier);
   }
 
   // Called once the command ends or is interrupted.
