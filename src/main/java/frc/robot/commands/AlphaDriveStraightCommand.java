@@ -8,7 +8,9 @@
 package frc.robot.commands;
 
 
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveTrainSubSystem;
@@ -20,15 +22,16 @@ public class AlphaDriveStraightCommand extends CommandBase {
    */
   Joystick throttleJoystick;
   JoystickButton straightStick;
-
+  Timer timer;
 
   DriveTrainSubSystem driveTrainSubSystem;
-  public AlphaDriveStraightCommand(DriveTrainSubSystem driveTrainSubSystem, Joystick throttleStick, JoystickButton straightStick) {
+  public AlphaDriveStraightCommand(DriveTrainSubSystem driveTrainSubSystem, Joystick throttleStick, JoystickButton straightStick, Timer timer) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveTrainSubSystem = driveTrainSubSystem;
     this.throttleJoystick = throttleStick;
     this.straightStick = straightStick;
     addRequirements(driveTrainSubSystem);
+    this.timer = timer;
   }
 
   // Called when the command is initially scheduled.
@@ -41,8 +44,10 @@ public class AlphaDriveStraightCommand extends CommandBase {
   @Override
   public void execute() {
     System.out.println(driveTrainSubSystem.getNavXAngle());
-    if (straightStick.get()) {
-      if (Constants.driveStraightConstants.notSimpleStraightMode) {
+    if (throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)>-0.05 && throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)<0.05) {
+      timer.stop();
+      timer.start();
+      if (Constants.driveStraightConstants.notSimpleStraightMode && timer.get() > 0.2) {
         driveTrainSubSystem.setNavXZero();
         Constants.driveStraightConstants.notSimpleStraightMode = false;
       }
@@ -51,7 +56,7 @@ public class AlphaDriveStraightCommand extends CommandBase {
     else{
       Constants.driveStraightConstants.notSimpleStraightMode = true;
     }
-    if (straightStick.get()) {
+    if (throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)>-0.05 && throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)<0.05) {
       Constants.driveStraightConstants.navXCorrectionTank = driveTrainSubSystem.getNavXAngle() * 0.01;
       Constants.driveStraightConstants.leftTalonPower = throttleJoystick.getRawAxis(Constants.OIConstants.throttleAxis) - throttleJoystick.getRawAxis(Constants.OIConstants.brakeAxis) - Constants.driveStraightConstants.navXCorrectionTank;
       Constants.driveStraightConstants.rightTalonPower = throttleJoystick.getRawAxis(Constants.OIConstants.throttleAxis) - throttleJoystick.getRawAxis(Constants.OIConstants.brakeAxis) + Constants.driveStraightConstants.navXCorrectionTank;

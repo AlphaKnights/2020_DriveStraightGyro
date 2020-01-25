@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AlphaDriveStraightCommand;
 import frc.robot.commands.DefaultDrive;
@@ -31,6 +32,7 @@ public class RobotContainer {
   private final JoystickButton m_throttle = new JoystickButton(driveJoystick, frc.robot.Constants.OIConstants.driveJoystickButtonID);
   private final JoystickButton ToggleThrottle = new JoystickButton(driveJoystick, frc.robot.Constants.OIConstants.toggleButtonThrottle);
   private final JoystickButton driveStraightButton = new JoystickButton(driveJoystick, frc.robot.Constants.OIConstants.driveStraightButtonID);
+  private final Timer timer = new Timer();
   //  private final Joystick rotateJoystick = new Joystick(frc.robot.Constants.OIConstants.ROTATE_JOYSTICK_PORT);
 
 
@@ -39,7 +41,7 @@ private final DriveTrainSubSystem driveTrainSubSystem = DriveTrainSubSystem.getI
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    DriveTrainSubSystem.getInstance().setDefaultCommand(new AlphaDriveStraightCommand(driveTrainSubSystem, driveJoystick, driveStraightButton));
+    DriveTrainSubSystem.getInstance().setDefaultCommand(new AlphaDriveStraightCommand(driveTrainSubSystem, driveJoystick, driveStraightButton, timer));
     // Configure the button bindings
     configureButtonBindings();
 
