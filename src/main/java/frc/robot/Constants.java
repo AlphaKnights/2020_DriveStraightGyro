@@ -43,6 +43,11 @@ public final class Constants {
         public static int throttleMode = 1;
         public static double navXCorrection = 0;
         public static double navXErrorAllotment = 1;
-        
+    }
+    public static class LimelightConstants {
+        public static double tx = 0;
+        public static double steering_adjust = 0.0f;
+        public static double error = 0;
+        public static double error_sign = 0;
     }
 }
