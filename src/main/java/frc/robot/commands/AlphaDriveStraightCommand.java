@@ -64,7 +64,7 @@ public class AlphaDriveStraightCommand extends CommandBase {
     }
    
    
-
+    System.out.println(driveTrainSubSystem.getNavXAngle());
 
    
    
