@@ -43,20 +43,35 @@ public class AlphaDriveStraightCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(driveTrainSubSystem.getNavXAngle());
-    if (throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)>-0.05 && throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)<0.05) {
-      timer.stop();
-      timer.start();
-      if (Constants.driveStraightConstants.notSimpleStraightMode && timer.get() > 0.2) {
-        driveTrainSubSystem.setNavXZero();
+    // if (throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)!=0){
+    //   driveTrainSubSystem.setNavXZero();  
+    // }
+    
+    if (throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)> Constants.driveStraightConstants.navXErrorMargin || throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)<-Constants.driveStraightConstants.navXErrorMargin) {
+      if (Constants.driveStraightConstants.notSimpleStraightMode) {
         Constants.driveStraightConstants.notSimpleStraightMode = false;
+        
       }
-
     }
+   
     else{
-      Constants.driveStraightConstants.notSimpleStraightMode = true;
+      timer.start();
+      if (Constants.driveStraightConstants.notSimpleStraightMode == false && timer.get() > 0.1) {
+        driveTrainSubSystem.setNavXZero();
+        Constants.driveStraightConstants.notSimpleStraightMode = true;
+        timer.stop();
+      }
     }
-    if (throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)>-0.05 && throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)<0.05) {
+   
+   
+
+
+   
+   
+    if (throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)>-Constants.driveStraightConstants.navXErrorMargin && throttleJoystick.getRawAxis(Constants.OIConstants.rotateJoystickAxis)<Constants.driveStraightConstants.navXErrorMargin && Constants.driveStraightConstants.notSimpleStraightMode) {
+
+      System.out.println(Constants.OIConstants.rotateJoystickAxis);
+      System.out.println(driveTrainSubSystem.getNavXAngle());
       Constants.driveStraightConstants.navXCorrectionTank = driveTrainSubSystem.getNavXAngle() * 0.01;
       Constants.driveStraightConstants.leftTalonPower = throttleJoystick.getRawAxis(Constants.OIConstants.throttleAxis) - throttleJoystick.getRawAxis(Constants.OIConstants.brakeAxis) - Constants.driveStraightConstants.navXCorrectionTank;
       Constants.driveStraightConstants.rightTalonPower = throttleJoystick.getRawAxis(Constants.OIConstants.throttleAxis) - throttleJoystick.getRawAxis(Constants.OIConstants.brakeAxis) + Constants.driveStraightConstants.navXCorrectionTank;

@@ -26,7 +26,7 @@ public final class Constants {
     }
 
     public static final class OIConstants{
-        public static final int DRIVE_JOYSTICK_PORT = 0;
+        public static final int DRIVE_JOYSTICK_PORT = 2;
         // public static final int ROTATE_JOYSTICK_PORT = 1;
         public static final int driveJoystickButtonID = 3;
         public static final int toggleButtonThrottle = 1;
@@ -52,6 +52,8 @@ public final class Constants {
         public static double leftTalonPower = 0;
         public static double navXCorrectionTank = 0;
         public static boolean notSimpleStraightMode = true;
+        public static double navXErrorMargin = 0.1;
+        public static boolean stoppedTurning = true;
         
     }
 }
